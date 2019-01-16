@@ -21,7 +21,7 @@ pipeline {
 
       }
       steps {
-        sh 'mvn test'
+        sh 'mvn -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 test'
       }
     }
     stage('Deliver') {

@@ -30,7 +30,4 @@ pipeline {
       }
     }
   }
-  environment {
-    http_proxy = 'http://10.0.2.2:3128/'
-  }
 }

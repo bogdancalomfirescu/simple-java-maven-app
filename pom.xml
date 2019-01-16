@@ -7,16 +7,6 @@
   <version>1.0-SNAPSHOT</version>
   <name>my-app</name>
   <url>http://maven.apache.org</url>
-  <proxies>
-    <!-- Proxy for HTTP -->
-    <proxy>
-      <active>true</active>
-      <protocol>http</protocol>
-      <host>10.0.2.2</host>
-      <port>3128</port>
-      <nonProxyHosts>local.net</nonProxyHosts>
-    </proxy>
-  </proxies>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

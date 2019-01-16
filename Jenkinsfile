@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven:3-alpine'
-      args '-v ./.m2/settings.xml:/root/.m2/settings.xml'
+      args '-v root/.m2:/root/.m2'
     }
 
   }
@@ -29,5 +29,8 @@ pipeline {
         sh './jenkins/scripts/deliver.sh'
       }
     }
+  }
+  environment {
+    http_proxy = 'http://10.0.2.2:3128/'
   }
 }

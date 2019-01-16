@@ -5,7 +5,7 @@ echo 'into the local Maven repository, which will ultimately be stored in'
 echo 'Jenkins''s local Maven repository (and the "maven-repository" Docker data'
 echo 'volume).'
 set -x
-mvn jar:jar install:install help:evaluate -Dexpression=project.name -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128
+mvn -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 jar:jar install:install help:evaluate -Dexpression=project.name
 set +x
 
 echo 'The following complex command extracts the value of the <name/> element'

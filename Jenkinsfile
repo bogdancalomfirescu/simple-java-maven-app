@@ -13,15 +13,24 @@ pipeline {
       }
     }
     stage('Test') {
-      post {
-        always {
-          junit 'target/surefire-reports/*.xml'
+      parallel {
+        stage('Test') {
+          post {
+            always {
+              junit 'target/surefire-reports/*.xml'
 
+            }
+
+          }
+          steps {
+            sh 'mvn -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 test'
+          }
         }
-
-      }
-      steps {
-        sh 'mvn -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 test'
+        stage('Archive Artifacts') {
+          steps {
+            archiveArtifacts 'target/*.jar'
+          }
+        }
       }
     }
     stage('Deliver') {

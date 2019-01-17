@@ -7,7 +7,7 @@ pipeline {
 
   }
   stages {
-    stage('Build') {
+    stage('Maven Build ') {
       steps {
         sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests clean package'
       }

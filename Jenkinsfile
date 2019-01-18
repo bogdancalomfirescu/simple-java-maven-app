@@ -10,7 +10,7 @@ pipeline {
     stage('SonarQube analysis') {
       steps {
         withSonarQubeEnv('My SonarQube Server') {
-          sh 'mvn -X -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests sonar:sonar'
+          sh 'mvn -X -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests sonar:sonar'
         }
 
       }

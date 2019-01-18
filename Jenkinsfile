@@ -8,8 +8,17 @@ pipeline {
   }
   stages {
     stage('Maven Build ') {
-      steps {
-        sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests clean package'
+      parallel {
+        stage('Maven Build ') {
+          steps {
+            sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests clean package'
+          }
+        }
+        stage('') {
+          steps {
+            withSonarQubeEnv 'SonarQube'
+          }
+        }
       }
     }
     stage('Test') {

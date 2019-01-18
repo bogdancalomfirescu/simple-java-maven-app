@@ -1,18 +1,15 @@
 pipeline {
-  agent any
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
   stages {
-    stage('SCM') {
-      steps {
-        git 'https://github.com/jenkins-docs/simple-java-maven-app.git'
-      }
-    }
     stage('SonarQube analysis') {
       steps {
         withSonarQubeEnv('My SonarQube Server') {
             sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean package sonar:sonar'
-
         }
-
       }
     }
     stage('Quality Gate') {
@@ -23,7 +20,6 @@ pipeline {
             error "Pipeline aborted due to quality gate failure: ${qg.status}"
           }
         }
-
       }
     }
   }

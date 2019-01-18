@@ -4,15 +4,16 @@ pipeline {
       image 'maven:3-alpine'
       args '-v /root/.m2:/root/.m2'
     }
-
   }
   stages {
-    stage('SonarQube analysis') {
-      steps {
-        withSonarQubeEnv('My SonarQube Server') {
-          sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean package sonar:sonar'
+    stage('Static Code Analysis') {
+      agent {
+        docker {
+          image: 'sonarqube'
         }
-
+      }
+      steps {
+        sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 sonar:sonar'
       }
     }
     stage('Quality Gate') {
@@ -20,16 +21,11 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') {
           waitForQualityGate true
         }
-
       }
     }
     stage('Maven Build ') {
-      parallel {
-        stage('Maven Build ') {
-          steps {
-            sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests clean package'
-          }
-        }
+      steps {
+        sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests clean package'
       }
     }
     stage('Test') {
@@ -40,7 +36,6 @@ pipeline {
               junit 'target/surefire-reports/*.xml'
 
             }
-
           }
           steps {
             sh 'mvn -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 test'

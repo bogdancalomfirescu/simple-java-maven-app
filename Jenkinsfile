@@ -10,7 +10,7 @@ pipeline {
     stage('SonarQube analysis') {
       steps {
         withSonarQubeEnv('My SonarQube Server') {
-          sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests -Djavax.net.ssl.trustStore=/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit sonar:sonar'
+          sh 'mvn -X -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 -DskipTests -Djavax.net.ssl.trustStore=/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit sonar:sonar'
         }
 
       }

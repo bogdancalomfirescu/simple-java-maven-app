@@ -7,7 +7,7 @@ pipeline {
 
   }
   stages {
-    stage('build && SonarQube analysis') {
+    stage('SonarQube analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
           withMaven(maven: 'Maven 3.5') {

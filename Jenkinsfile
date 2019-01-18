@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('SonarQube analysis') {
       steps {
-        withSonarQubeEnv('SonarQube') {
+        withSonarQubeEnv('My SonarQube Server') {
           withMaven(maven: 'Maven 3.5') {
             sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean package sonar:sonar'
           }

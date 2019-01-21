@@ -16,7 +16,9 @@ pipeline {
       parallel {
         stage ('Run the Unit testing') {
           steps {
-            sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean test'
+            try {
+              sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean test'
+            }
             catch(err) {
               step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                 if (currentBuild.result == 'UNSTABLE')

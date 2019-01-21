@@ -33,5 +33,11 @@ pipeline {
         junit '**/target/surefire-reports/TEST-*.xml'
       }
     }
+    stage('Build Stage') {
+      steps {
+        build 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean install'
+        archiveArtifacts '**/target/*.jar'
+      }
+    }
   }
 }

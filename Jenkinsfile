@@ -15,17 +15,18 @@ pipeline {
     stage('JUnit testing') {
       steps {
         script {
-            try {
-              sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 surefire:test'
-            }
-            catch(err) {
-              step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-                if (currentBuild.result == 'UNSTABLE')
-                    currentBuild.result = 'FAILURE'
-                throw err
-            }
-        }  
-      }  
+          try {
+            sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 surefire:test'
+          }
+          catch(err) {
+            step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+            if (currentBuild.result == 'UNSTABLE')
+            currentBuild.result = 'FAILURE'
+            throw err
+          }
+        }
+
+      }
     }
   }
 }

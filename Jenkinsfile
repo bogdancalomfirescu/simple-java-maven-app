@@ -13,7 +13,6 @@ pipeline {
       }
     }
     stage('JUnit testing') {
-      parallel {
         stage ('Run the Unit testing') {
             try {
               sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean test'
@@ -25,13 +24,6 @@ pipeline {
                 throw err
             }
         }
-        stage ('Archive the test results') {
-          steps {
-            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-            junit 'build/reports/**/*.xml'
-          }
-        }
-      }
     }
   }
 }

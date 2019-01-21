@@ -15,7 +15,6 @@ pipeline {
     stage('JUnit testing') {
       parallel {
         stage ('Run the Unit testing') {
-          steps {
             try {
               sh 'mvn -B -DproxySet=true -DproxyHost=10.0.2.2 -DproxyPort=3128 clean test'
             }
@@ -25,7 +24,6 @@ pipeline {
                     currentBuild.result = 'FAILURE'
                 throw err
             }
-          }
         }
         stage ('Archive the test results') {
           steps {

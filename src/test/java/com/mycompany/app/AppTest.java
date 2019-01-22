@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class AppTest
 {
-
+    Foo foo;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
@@ -40,6 +40,14 @@ public class AppTest
         }
     }
 
+    @Test
+    public void failExampleTest() {
+    
+        if(foo == null){
+           fail("foo is null");
+        }
+    }  
+    
     @After
     public void cleanUpStreams() {
         System.setOut(null);
